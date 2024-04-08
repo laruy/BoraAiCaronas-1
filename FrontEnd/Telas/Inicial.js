@@ -2,7 +2,7 @@ import React from "react";
 import { Image, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 
-const logoIcon = require("../icons/logo.png");
+const logoIcon = require("../icons/Logo.png");
 
 const Inicial = () => {
   const navigation = useNavigation();

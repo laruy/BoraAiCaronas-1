@@ -52,7 +52,7 @@ const CadastroScreen = () => {
       Axios.post("/veiculo", veiculo)
         .then((response) => {
           alert("Veiculo cadastrado com sucesso!");
-          navigation.navigate('PainelCaroneiro')
+          navigation.navigate('PainelCarona')
         })
         .catch((error) => {
           alert(error.response.data.message);
