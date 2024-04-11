@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeCarona from '../Telas/HomeCarona';
 import HomeCaroneiro from '../Telas/HomeCaroneiro';
 import CaronaRapida from '../Telas/CaronaRapida';
-import Inicial from '../Telas/Inicial';
+import LoginNova from '../Telas/LoginNova';
 import Cadastrar from '../Telas/Cadastrar';
 import Login from '../Telas/Login';
 import CadastrarVeiculo from '../Telas/CadastrarVeiculo';
@@ -21,11 +21,11 @@ const Stack = createStackNavigator();
 function Navegador() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Inicial">
+      <Stack.Navigator initialRouteName="LoginNova">
         <Stack.Screen name="HomeCarona" component={HomeCarona} options={{ headerShown: false }} />
         <Stack.Screen name="HomeCaroneiro" component={HomeCaroneiro} options={{ headerShown: false }} />
         <Stack.Screen name="CaronaRapida" component={CaronaRapida} options={{ headerShown: false }} />
-        <Stack.Screen name="Inicial" component={Inicial} options={{ headerShown: false }} />
+        <Stack.Screen name="LoginNova" component={LoginNova} options={{ headerShown: false }} />
         <Stack.Screen name="Cadastrar" component={Cadastrar} options={{ headerShown: false }} />
         <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
         <Stack.Screen name="CadastrarVeiculo" component={CadastrarVeiculo} options={{ headerShown: false }} />
