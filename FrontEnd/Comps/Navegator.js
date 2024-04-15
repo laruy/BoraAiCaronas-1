@@ -15,6 +15,7 @@ import PainelCarona from '../Telas/PainelCarona';
 import PedirCarona from '../Telas/PedirCarona';
 import Perfil from '../Telas/Perfil';
 import EditarCarona from '../Telas/EditarCarona';
+import AceitarCaronas from '../Telas/AceitarCaronas';
 
 const Stack = createStackNavigator();
 
@@ -37,6 +38,7 @@ function Navegador() {
         <Stack.Screen name="PedirCarona" component={PedirCarona} options={{ headerShown: false }} />
         <Stack.Screen name="Perfil" component={Perfil} options={{ headerShown: false }} />
         <Stack.Screen name="EditarCarona" component={EditarCarona} options={{ headerShown: false }} />
+        <Stack.Screen name='AceitarCaronas' component={AceitarCaronas} options={{headerShown: false}} />
       </Stack.Navigator>
     </NavigationContainer>
   );
