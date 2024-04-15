@@ -182,4 +182,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Perfil;
+export default Perfil; 
