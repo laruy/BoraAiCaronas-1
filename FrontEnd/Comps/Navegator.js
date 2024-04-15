@@ -15,7 +15,9 @@ import PainelCarona from '../Telas/PainelCarona';
 import PedirCarona from '../Telas/PedirCarona';
 import Perfil from '../Telas/Perfil';
 import EditarCarona from '../Telas/EditarCarona';
+import Registrar from '../Telas/Registrar';
 import AceitarCaronas from '../Telas/AceitarCaronas';
+
 
 const Stack = createStackNavigator();
 
@@ -23,6 +25,7 @@ function Navegador() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="LoginNova">
+        <Stack.Screen name="Registrar" component={Registrar} options={{ headerShown: false }} />
         <Stack.Screen name="HomeCarona" component={HomeCarona} options={{ headerShown: false }} />
         <Stack.Screen name="HomeCaroneiro" component={HomeCaroneiro} options={{ headerShown: false }} />
         <Stack.Screen name="CaronaRapida" component={CaronaRapida} options={{ headerShown: false }} />
