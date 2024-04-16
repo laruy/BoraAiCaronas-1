@@ -60,20 +60,20 @@ const CadastroScreen = () => {
   return (
     <BackGround>
       <CustomTextInputBorda
-        placeholder="NOME" value={nome} onChangeText={setNome} iconSource={UserIcon}/>
+        placeholder="NOME" value={nome} fontSize={22} onChangeText={setNome} iconSource={UserIcon}/>
       <CustomTextInputBorda
-        placeholder="USER" value={user} onChangeText={setUser}iconSource={UserIcon}/>
+        placeholder="USER" value={user} fontSize={22} onChangeText={setUser}iconSource={UserIcon}/>
       <CustomTextInputBorda
-        placeholder="FONE" value={telefone} onChangeText={setTelefone} iconSource={Phone}/>
+        placeholder="FONE" value={telefone} fontSize={22} onChangeText={setTelefone} iconSource={Phone}/>
       <CustomTextInputBorda
-        placeholder="CPF" value={cpf} onChangeText={setCpf} secureTextEntry iconSource={CPFIcon}/>
+        placeholder="CPF" value={cpf} fontSize={22} onChangeText={setCpf} secureTextEntry iconSource={CPFIcon}/>
       <CustomTextInputBorda
-        placeholder="EMAIL" value={confirmarSenha} onChangeText={setConfirmarSenha} secureTextEntry iconSource={EmailIcon}/>
+        placeholder="EMAIL" value={confirmarSenha} fontSize={22} onChangeText={setConfirmarSenha} secureTextEntry iconSource={EmailIcon}/>
       <CustomTextInputBorda
-        placeholder="SENHA" value={senha} onChangeText={setSenha} secureTextEntry iconSource={PasswordIcon}/>
+        placeholder="SENHA" value={senha} fontSize={22} onChangeText={setSenha} secureTextEntry iconSource={PasswordIcon}/>
       <CustomTextInputBorda //Campo com borada Ondulada nas estremidades
-        placeholder="CONFIRME SENHA" value={confirmarSenha} onChangeText={setConfirmarSenha} secureTextEntry iconSource={PasswordIcon}/>
-      <View >
+        placeholder="CONFIRME SENHA" value={confirmarSenha} fontSize={22} onChangeText={setConfirmarSenha} secureTextEntry iconSource={PasswordIcon}/>
+      <View style={styles.buttonContainer}>
         <CustomButton fontSize={20} title="CADASTRAR" backgroundColor="#E57A4B" textColor="#FFFFFF" onPress={() => {
           <TouchableOpacity onPress={() => navigation.navigate('Registrar')}>
         </TouchableOpacity>
@@ -82,5 +82,14 @@ const CadastroScreen = () => {
       </BackGround>
   );
 };
+
+const styles = StyleSheet.create({
+  buttonContainer: {
+    marginTop: 10,
+    marginBottom: 50,
+    width:330,
+    height:71,
+  },
+});
 
 export default CadastroScreen;

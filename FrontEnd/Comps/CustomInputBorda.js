@@ -22,9 +22,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginBottom: 10,
     backgroundColor:'#FFFF',
-    width:300,
+    width:330,
     height:54,
-    marginBottom:20
+    marginBottom:30
   },
   textinput: {
     flex: 1,

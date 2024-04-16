@@ -19,8 +19,8 @@ const LoginNova = () => {
         <CustomTextInput placeholder='EMAIL-USUÁRIO' textColor='#BCB6B6' fontSize={20} iconSource={EmailIcon} />
         <CustomTextInput placeholder='SENHA' textColor='#BCB6B6' fontSize={20} iconSource={PasswordIcon} />
         <View style={styles.buttonContainer}>
-          <CustomButton fontSize={20} title="Entrar" backgroundColor="#E57A4B" textColor="#FFFFFF" onPress={() => {
-            // Lógica para o botão de login aqui
+          <CustomButton fontSize={20} title="Entrar" backgroundColor="#E57A4B" textColor="#FFFFFF" onPress={(nav) => {
+            navigation.navigate('BuscarCaronasNovas')
           }} />
           <TouchableOpacity onPress={() => navigation.navigate('Registrar')}>
             <Text style={styles.registerText}>REGISTRAR-SE</Text>
