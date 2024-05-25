@@ -1,12 +1,15 @@
 import { TextInput, StyleSheet, View, Image } from 'react-native';
 
-const CustomTextInput = ({ placeholder, textColor, fontSize, iconSource }) => {
+const CustomTextInput = ({ placeholder,onChangeText, value ,textColor, fontSize, iconSource, secureTextEntry }) => {
   return (
     <View style={[styles.container]}>
       <Image source={iconSource} style={styles.icon} />
       <TextInput
         placeholder={placeholder}
+        onChangeText={onChangeText}
+        value={value}
         style={[styles.textinput, { color: textColor, fontSize: fontSize }]}
+        secureTextEntry={secureTextEntry}
       />
     </View>
   );
