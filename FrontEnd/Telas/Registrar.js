@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Alert, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { BackGround } from '../Comps/BackGround';
 import { CustomTextInputBorda } from '../Comps/CustomInputBorda';
 import { CustomButton } from '../Comps/CustomButton';
 import Axios from '../Comps/Axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const EmailIcon = require("../icons/EmailIcon.png");
 const PasswordIcon = require("../icons/PasswordIcon.png");
@@ -20,15 +21,30 @@ const CadastroScreen = () => {
   const [telefone, setTelefone] = useState("");
   const [senha, setSenha] = useState("");
   const [confirmarSenha, setConfirmarSenha] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigation = useNavigation();
 
+  useEffect(() => {
+    checkLoginStatus();
+  }, []);
+
+  const checkLoginStatus = async () => {
+    try {
+      const user = await AsyncStorage.getItem('user');
+      if (user) {
+        setIsLoggedIn(true);
+        console.log("logado: " + user)
+        console.log(isLoggedIn)
+      } else {
+        setIsLoggedIn(false);
+        console.log("nao logado: " + user)
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleCadastro = () => {
-    console.log(nome)
-    console.log(email)
-    console.log(telefone)
-    console.log(senha)
-    console.log(confirmarSenha)
-    console.log(cpf)
     if (senha !== confirmarSenha) {
       Alert.alert('Erro', 'As senhas não coincidem.');
       return;
@@ -47,6 +63,7 @@ const CadastroScreen = () => {
       Axios.post("/user/cadastro", usuario)
         .then((response) => {
           alert("Usuário cadastrado com sucesso!");
+          setIsLoggedIn(true);
           navigation.goBack();
         })
         .catch((error) => {
@@ -115,7 +132,7 @@ const CadastroScreen = () => {
         <View style={styles.buttonContainer}>
           <CustomButton 
             fontSize={20} 
-            title="CADASTRAR" 
+            title={isLoggedIn ? "Cadastrar" : "Editar"} 
             backgroundColor="#E57A4B" 
             textColor="#FFFFFF" 
             onPress={handleCadastro} 
