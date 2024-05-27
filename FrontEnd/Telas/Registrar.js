@@ -22,25 +22,48 @@ const CadastroScreen = () => {
   const [senha, setSenha] = useState("");
   const [confirmarSenha, setConfirmarSenha] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userId, setUserId] = useState(null);
   const navigation = useNavigation();
 
   useEffect(() => {
     checkLoginStatus();
   }, []);
 
+  useEffect(() => {
+    if (userId) {
+      fetchUserData(userId);
+    }
+  }, [userId]);
+
   const checkLoginStatus = async () => {
     try {
       const user = await AsyncStorage.getItem('user');
       if (user) {
         setIsLoggedIn(true);
-        console.log("logado: " + user)
-        console.log(isLoggedIn)
+        const userData = JSON.parse(user);
+        setUserId(userData.id);
+        console.log("usuario: " + user + "id: " + userData.id)
       } else {
         setIsLoggedIn(false);
-        console.log("nao logado: " + user)
       }
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  const fetchUserData = async (id) => {
+    try {
+      const response = await Axios.get(`/user/${id}`);
+      const userData = response.data;
+      setNome(userData.nome);
+      setCpf(userData.CPF);
+      setEmail(userData.email);
+      setTelefone(userData.telefone);
+      setSenha(userData.senha);
+      setConfirmarSenha(userData.senha);
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Erro', 'Erro ao buscar dados do usuário.');
     }
   };
 
@@ -58,28 +81,30 @@ const CadastroScreen = () => {
         "senha": senha,
         "confirmarSenha": confirmarSenha,
       };
-      console.log(usuario)
-    
-      Axios.post("/user/cadastro", usuario)
-        .then((response) => {
-          alert("Usuário cadastrado com sucesso!");
+
+      const request = isLoggedIn ? Axios.put(`/user/${userId}`, usuario) : Axios.post("/user/cadastro", usuario);
+
+      request.then((response) => {
+        alert(isLoggedIn ? "Usuário atualizado com sucesso!" : "Usuário cadastrado com sucesso!");
+        if (!isLoggedIn) {
           setIsLoggedIn(true);
-          navigation.goBack();
-        })
-        .catch((error) => {
-          console.log(error)
-          alert("Erro ao cadastrar usuário!");
-        });
-        setNome("");
-        setCpf("");
-        setTelefone("");
-        setEmail("");
-        setSenha("");
-        setConfirmarSenha("");
+        }
+        navigation.goBack();
+      }).catch((error) => {
+        console.log(error);
+        alert(isLoggedIn ? "Erro ao atualizar usuário!" : "Erro ao cadastrar usuário!");
+      });
+
+      setNome("");
+      setCpf("");
+      setTelefone("");
+      setEmail("");
+      setSenha("");
+      setConfirmarSenha("");
     } else {
       alert("Preencha todos os dados!");
     }
-  };  
+  };
 
   return (
     <BackGround>
@@ -132,7 +157,7 @@ const CadastroScreen = () => {
         <View style={styles.buttonContainer}>
           <CustomButton 
             fontSize={20} 
-            title={isLoggedIn ? "Cadastrar" : "Editar"} 
+            title={isLoggedIn ? "Editar" : "Cadastrar"} 
             backgroundColor="#E57A4B" 
             textColor="#FFFFFF" 
             onPress={handleCadastro} 
