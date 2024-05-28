@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Alert, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { BackGround } from '../Comps/BackGround';
 import { CustomTextInputBorda } from '../Comps/CustomInputBorda';
 import { CustomButton } from '../Comps/CustomButton';
 import Axios from '../Comps/Axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const EmailIcon = require("../icons/EmailIcon.png");
 const PasswordIcon = require("../icons/PasswordIcon.png");
@@ -20,15 +21,53 @@ const CadastroScreen = () => {
   const [telefone, setTelefone] = useState("");
   const [senha, setSenha] = useState("");
   const [confirmarSenha, setConfirmarSenha] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userId, setUserId] = useState(null);
   const navigation = useNavigation();
 
+  useEffect(() => {
+    checkLoginStatus();
+  }, []);
+
+  useEffect(() => {
+    if (userId) {
+      fetchUserData(userId);
+    }
+  }, [userId]);
+
+  const checkLoginStatus = async () => {
+    try {
+      const user = await AsyncStorage.getItem('user');
+      if (user) {
+        setIsLoggedIn(true);
+        const userData = JSON.parse(user);
+        setUserId(userData.id);
+        console.log("usuario: " + user + "id: " + userData.id)
+      } else {
+        setIsLoggedIn(false);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchUserData = async (id) => {
+    try {
+      const response = await Axios.get(`/user/${id}`);
+      const userData = response.data;
+      setNome(userData.nome);
+      setCpf(userData.CPF);
+      setEmail(userData.email);
+      setTelefone(userData.telefone);
+      setSenha(userData.senha);
+      setConfirmarSenha(userData.senha);
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Erro', 'Erro ao buscar dados do usuário.');
+    }
+  };
+
   const handleCadastro = () => {
-    console.log(nome)
-    console.log(email)
-    console.log(telefone)
-    console.log(senha)
-    console.log(confirmarSenha)
-    console.log(cpf)
     if (senha !== confirmarSenha) {
       Alert.alert('Erro', 'As senhas não coincidem.');
       return;
@@ -42,27 +81,30 @@ const CadastroScreen = () => {
         "senha": senha,
         "confirmarSenha": confirmarSenha,
       };
-      console.log(usuario)
-    
-      Axios.post("/user/cadastro", usuario)
-        .then((response) => {
-          alert("Usuário cadastrado com sucesso!");
-          navigation.goBack();
-        })
-        .catch((error) => {
-          console.log(error)
-          alert("Erro ao cadastrar usuário!");
-        });
-        setNome("");
-        setCpf("");
-        setTelefone("");
-        setEmail("");
-        setSenha("");
-        setConfirmarSenha("");
+
+      const request = isLoggedIn ? Axios.put(`/user/${userId}`, usuario) : Axios.post("/user/cadastro", usuario);
+
+      request.then((response) => {
+        alert(isLoggedIn ? "Usuário atualizado com sucesso!" : "Usuário cadastrado com sucesso!");
+        if (!isLoggedIn) {
+          setIsLoggedIn(true);
+        }
+        navigation.goBack();
+      }).catch((error) => {
+        console.log(error);
+        alert(isLoggedIn ? "Erro ao atualizar usuário!" : "Erro ao cadastrar usuário!");
+      });
+
+      setNome("");
+      setCpf("");
+      setTelefone("");
+      setEmail("");
+      setSenha("");
+      setConfirmarSenha("");
     } else {
       alert("Preencha todos os dados!");
     }
-  };  
+  };
 
   return (
     <BackGround>
@@ -115,7 +157,7 @@ const CadastroScreen = () => {
         <View style={styles.buttonContainer}>
           <CustomButton 
             fontSize={20} 
-            title="CADASTRAR" 
+            title={isLoggedIn ? "Editar" : "Cadastrar"} 
             backgroundColor="#E57A4B" 
             textColor="#FFFFFF" 
             onPress={handleCadastro} 
