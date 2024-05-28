@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     alignItems: 'center', // Centralizar o avatar
   },
   avatar: {
-    width: 100, // Largura do avatar
+    width: 110, // Largura do avatar
     height: 100, // Altura do avatar
     marginBottom: 20, // Espaçamento abaixo do avatar
   },

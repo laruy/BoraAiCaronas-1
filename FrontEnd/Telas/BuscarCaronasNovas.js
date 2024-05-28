@@ -7,7 +7,7 @@ const BuscarCaronasNovas = () => {
   const longitude = -53.0976167;
 
   return (
-    <View style={styles.container}>
+    <View>
       <MapView
         style={styles.map}
         initialRegion={{
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   },
   map: {
     width: "100%",
-    height: 597,
+    height: 797,
   },
 });
 
