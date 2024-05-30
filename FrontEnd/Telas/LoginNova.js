@@ -47,7 +47,7 @@ const LoginNova = () => {
       <View style={styles.container}>
         <Logo source={require("../icons/Logo.png")} width={413} height={360} marginBottom={20} />
         <CustomTextInput 
-          placeholder='EMAIL-USUÁRIO' 
+          placeholder='EMAIL' 
           textColor='#BCB6B6' 
           fontSize={20} 
           iconSource={EmailIcon} 
