@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   },
   search: {
     height: '40%',
-    backgroundColor: 'gray'
+    backgroundColor: '#203864'
   }
 });
 
