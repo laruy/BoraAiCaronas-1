@@ -1,9 +1,26 @@
-import React from 'react';
-import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import SearchInput from '../Comps/searchInput';
 import Caronas from '../Comps/Caronas';
+import CustomAlert from '../Comps/CustomAlert';
 
 const AceitarCaronas = () => {
+  const [isAlertVisible, setAlertVisible] = useState(false);
+
+  const showAlert = () => {
+    setAlertVisible(true);
+  };
+
+  const hideAlert = () => {
+    setAlertVisible(false);
+  };
+
+  const handleConfirm = () => {
+    // Lógica ao confirmar
+    hideAlert();
+    console.log("Solicitação aceita.");
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -13,8 +30,8 @@ const AceitarCaronas = () => {
           </View>
         </View>
         <Text style={styles.solicitacoesText}>SOLICITAÇÕES</Text>
-        <Caronas nomeUsuario="Nome do Usuário 1" localParada="Local de Parada 1" textoBotao="Aceitar"  />
-        <Caronas nomeUsuario="Nome do Usuário 2" localParada="Local de Parada 2" textoBotao="Aceitar"  />
+        <Caronas nomeUsuario="Nome do Usuário 1" localParada="Local de Parada 1" textoBotao="Aceitar" onPress={showAlert} />
+        <Caronas nomeUsuario="Nome do Usuário 2" localParada="Local de Parada 2" textoBotao="Aceitar" onPress={showAlert} />
       </ScrollView>
       <View style={styles.footer}>
         <View style={styles.footerLeft}>
@@ -28,6 +45,12 @@ const AceitarCaronas = () => {
           </TouchableOpacity>
         </View>
       </View>
+      <CustomAlert
+        isVisible={isAlertVisible}
+        onClose={hideAlert}
+        onConfirm={handleConfirm}
+        message="Você deseja aceitar esta solicitação de carona?"
+      />
     </View>
   );
 };
