@@ -2,7 +2,7 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 
-const SolicitacaoContainer = ({ nomeUsuario, localParada, textoBotao }) => {
+const SolicitacaoContainer = ({ nomeUsuario, localParada, textoBotao, onPress }) => {
   return (
     <View style={styles.solicitacaoContainer}>
       <View style={styles.solicitacao}>
@@ -11,7 +11,7 @@ const SolicitacaoContainer = ({ nomeUsuario, localParada, textoBotao }) => {
           <Text style={styles.nome}>{nomeUsuario}</Text>
           <Text style={styles.parada}>{localParada}</Text>
         </View>
-        <TouchableOpacity style={styles.botao}>
+        <TouchableOpacity style={styles.botao} onPress={onPress}>
           <Text style={styles.textoBotao}>{textoBotao}</Text>
         </TouchableOpacity>
       </View>
