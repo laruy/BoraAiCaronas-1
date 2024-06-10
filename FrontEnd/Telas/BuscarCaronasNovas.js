@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import config from '../config/index.json';
 import MapViewDirections from 'react-native-maps-directions';
 import CustomAlert from "../Comps/CustomAlert";
-import Axios from 'axios'; // Certifique-se de ter o Axios instalado
+import Axios from '../Comps/Axios';
 
 const BuscarCaronasNovas = () => {
   const [isAlertVisible, setAlertVisible] = useState(false);
