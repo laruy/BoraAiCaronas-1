@@ -30,24 +30,30 @@ const CadastroScreen = () => {
   }, []);
 
   useEffect(() => {
-    if (userId) {
+    if (isLoggedIn && userId) {
       fetchUserData(userId);
+    } else {
+      clearUserData();
     }
-  }, [userId]);
+  }, [isLoggedIn, userId]);
 
   const checkLoginStatus = async () => {
     try {
       const user = await AsyncStorage.getItem('user');
       if (user) {
-        setIsLoggedIn(true);
         const userData = JSON.parse(user);
-        setUserId(userData.id);
-        console.log("usuario: " + user + "id: " + userData.id)
+        if (userData.id > 0) {
+          setIsLoggedIn(true);
+          setUserId(userData.id);
+        } else {
+          setIsLoggedIn(false);
+        }
       } else {
         setIsLoggedIn(false);
       }
     } catch (error) {
       console.error(error);
+      setIsLoggedIn(false);
     }
   };
 
@@ -67,6 +73,15 @@ const CadastroScreen = () => {
     }
   };
 
+  const clearUserData = () => {
+    setNome("");
+    setCpf("");
+    setEmail("");
+    setTelefone("");
+    setSenha("");
+    setConfirmarSenha("");
+  };
+
   const handleCadastro = () => {
     if (senha !== confirmarSenha) {
       Alert.alert('Erro', 'As senhas não coincidem.');
@@ -80,6 +95,7 @@ const CadastroScreen = () => {
         "email": email,
         "senha": senha,
         "confirmarSenha": confirmarSenha,
+        "flagMotorista": "F"
       };
 
       const request = isLoggedIn ? Axios.put(`/user/${userId}`, usuario) : Axios.post("/user/cadastro", usuario);
@@ -88,19 +104,16 @@ const CadastroScreen = () => {
         alert(isLoggedIn ? "Usuário atualizado com sucesso!" : "Usuário cadastrado com sucesso!");
         if (!isLoggedIn) {
           setIsLoggedIn(true);
+          navigation.goBack();
+        }else{
+          fetchUserData(userId)
         }
-        navigation.goBack();
       }).catch((error) => {
         console.log(error);
         alert(isLoggedIn ? "Erro ao atualizar usuário!" : "Erro ao cadastrar usuário!");
       });
 
-      setNome("");
-      setCpf("");
-      setTelefone("");
-      setEmail("");
-      setSenha("");
-      setConfirmarSenha("");
+      clearUserData();
     } else {
       alert("Preencha todos os dados!");
     }
